@@ -1,3 +1,9 @@
-a.
-b.
-c.
+1. We can make the tree behave like a list if we make only one of the 4 children of each node hold something and leave the others as empty. The cost of traversing the tree will then be the depth O(n). We can take a list of points such that each split put them in the same quarter. For example we can use these points which get closer to (0, 0):
+(0.5, 0.5), (0.25, 0.25), (0.125, 0.125), ... ,(1/2^k, 1/2^k)
+
+For a constant query, we can pick a point that would be an empty leaf at the root: (1, 1) since SE is empty
+For an O(n) query, we can pick the point that our previous points gradually get closer to: (0, 0) since NW is the only populated child node traversal.
+
+2. If there are a max of 8 primitives per leaf, when a 9th ball arrives the leaf will split into 4 children. If the tree were to split until each leaf has less than or 8 balls, there will be an infinite loop (they will split forever). This is a problem and we can alleviate it by checking if the split will actually result in the objects going into more than one node. If they don't we can choose to let the leaf exceed its limit.
+
+3. Small shifts could change the tree a lot as even with a small shift, the quadrant the object is stored in can completely change if it crosses the root's centre line which could end up causing a lot of computation to occur to completely reorganize the tree. Some objects could also leave the bounds of the tree which would mean the root would have to be enlarged or rebuilt to support new bounds. The tree works well for fixed bounds but do not work well for scenes where the contents are moving in non-fixed ways that could affect the world bounds. 
